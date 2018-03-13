@@ -1,0 +1,15 @@
+Shader.source[document.currentScript.src.split('js/shaders/')[1]] = `
+	attribute vec3 vertexPosition;
+	attribute vec2 vertexTexCoord;
+	varying vec2 tex;
+
+	uniform vec2 modelPosition; //kezdoknek
+	uniform mat4 modelMatrix; //haladoknak
+
+	uniform vec2 offset;
+
+	void main(void) {
+		gl_Position = vec4(vertexPosition * 0.5, 1) * modelMatrix;
+		tex = (vertexTexCoord + offset) * 0.17;
+	}
+`;
