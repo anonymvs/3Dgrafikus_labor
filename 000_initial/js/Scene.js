@@ -36,20 +36,8 @@ const Scene = function(gl) {
   this.hide = false;
   this.cnt = 0;
 
-  addEvent(window, "resize", this.camera.setAspectRatio(window.innerWidth / window.innerHeight));
 
 };
-
-var addEvent = function (object, type, callback) {
-  if (object == null || typeof(object) == 'undefined') return;
-  if (object.addEventListener) {
-    object.addEventListener(type, callback, false);
-  } else if (object.attachEvent) {
-    object.attachEvent("on" + type, callback);
-  } else {
-    object["on" + type] = callback;
-  }
-}
 
 Scene.prototype.update = function(gl, keysPressed) {
   //jshint bitwise:false
@@ -57,6 +45,8 @@ Scene.prototype.update = function(gl, keysPressed) {
   const timeAtThisFrame = new Date().getTime();
   const dt = (timeAtThisFrame - this.timeAtLastFrame) / 1000.0;
   this.timeAtLastFrame = timeAtThisFrame;
+
+  this.camera.setAspectRatio(window.innerWidth / window.innerHeight);
 
   // clear the screen
   gl.clearColor(0.6, 1.0, 0.3, 1.0);

@@ -1,5 +1,5 @@
 const OrthoCamera = function () {
-  this.position = new Vec2(0.5, 0);
+  this.position = new Vec2(0, 0);
   this.rotation = 0;
   this.windowSize = new Vec2(2,2);
 
@@ -17,7 +17,6 @@ OrthoCamera.prototype.updateViewProjMatrix = function () {
 };
 
 OrthoCamera.prototype.setAspectRatio = function (ar) {
-  console.log(ar);
   this.windowSize.x = this.windowSize.y * ar;
   this.updateViewProjMatrix();
 };
