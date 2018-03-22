@@ -18,7 +18,10 @@ GameObject.prototype.updateModelTransformation = function () {
 
 GameObject.prototype.draw = function () {
   //feladat: Material.modelMatrix uniform beállítása
-  this.mesh.material.modelMatrix.set(this.modelMatrix);
+  //this.mesh.material.modelMatrix.set(this.modelMatrix);
+  for(let i = 0; i < this.mesh.meshes.length; i++) {
+    this.mesh.meshes[i].material.modelMatrix.set(this.modelMatrix);
+  }
 
   this.mesh.draw();
 }

@@ -13,7 +13,7 @@ const Material = function (gl, program) {
     }
   });
   // Material.modelMatrix = new Mat4();
-  Object.defineProperty(Material, "modelMatrix", {value : new Mat4()});
+  //Object.defineProperty(Material, "modelMatrix", {value : new Mat4()});
   Material.animationPhase = new Vec2();
   Material.mysampler = new Sampler2D();
 

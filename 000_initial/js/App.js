@@ -38,20 +38,21 @@ App.prototype.registerEventHandlers = function() {
 	};
 	this.canvas.onmousedown = function(event) {
 		//jshint unused:false
-		//theApp.scene.mouseDown(event);
+		theApp.scene.camera.mouseDown(event);
 	};
 	this.canvas.onmousemove = function(event) {
 		//jshint unused:false
 		event.stopPropagation();
-		//theApp.scene.mouseMove(event);
+		theApp.scene.camera.mouseMove(event);
 	};
 	this.canvas.onmouseout = function(event) {
 		//jshint unused:false
-		//theApp.scene.mouseUp(event);
+		theApp.scene.camera.mouseUp(event);
 	};
 	this.canvas.onmouseup = function(event) {
-		//jshint unused:false
-		//theApp.scene.mouseUp(event);
+		// jshint unused:false
+		theApp.scene.camera.mouseUp(event);
+
 	};
 	window.addEventListener('resize', function() {
 		theApp.resize();
@@ -59,7 +60,7 @@ App.prototype.registerEventHandlers = function() {
 	});
 	window.requestAnimationFrame(function() {
 		theApp.update();
-	});		
+	});
 };
 
 // animation frame update
@@ -78,7 +79,7 @@ App.prototype.update = function() {
 	const theApp = this;
 	window.requestAnimationFrame(function() {
 		theApp.update();
-	});	
+	});
 };
 
 // entry point from HTML

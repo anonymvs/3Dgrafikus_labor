@@ -1,53 +1,38 @@
 "use strict";
-const QuadGeometry = function(gl, meshesJson) {
+const TriangleMeshGeometry = function(gl, meshesJson) {
   this.gl = gl;
+
   // vertex buffer
   this.vertexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
   gl.bufferData(gl.ARRAY_BUFFER,
-    new Float32Array([
-    	-1, -1, 0,
-    	-1,  1, 0,
-       1, -1, 0,
-       1,  1, 0,
-    ]),
+    new Float32Array(meshesJson.vertices),
     gl.STATIC_DRAW);
 
   this.vertexNormalBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexNormalBuffer);
   gl.bufferData(gl.ARRAY_BUFFER,
-    new Float32Array([
-    	 0, 0, 1,
-    	 0, 0, 1,
-       0, 0, 1,
-       0, 0, 1,
-    ]),
+    new Float32Array(meshesJson.normals),
     gl.STATIC_DRAW);
 
   this.vertexTexCoordBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexTexCoordBuffer);
   gl.bufferData(gl.ARRAY_BUFFER,
-    new Float32Array([
-    	 0, 1,
-    	 0, 0,
-       1, 1,
-       1, 0,
-    ]),
+    new Float32Array(meshesJson.texturecoords[0]),
     gl.STATIC_DRAW);
+
+  this.indexes = [].concat.apply([], meshesJson.faces);
 
   // index buffer
   this.indexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,
-    new Uint16Array([
-      0, 1, 2,
-      1, 2, 3,
-    ]),
+    new Uint16Array(this.indexes),
     gl.STATIC_DRAW);
 
 };
 
-QuadGeometry.prototype.draw = function() {
+TriangleMeshGeometry.prototype.draw = function() {
   const gl = this.gl;
   // set vertex buffer to pipeline input
   gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
@@ -78,6 +63,6 @@ QuadGeometry.prototype.draw = function() {
   // set index buffer to pipeline input
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 
-  gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+  gl.drawElements(gl.TRIANGLES, this.indexes.length, gl.UNSIGNED_SHORT, 0);
 
 };
