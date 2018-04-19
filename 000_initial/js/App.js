@@ -52,7 +52,6 @@ App.prototype.registerEventHandlers = function() {
 	this.canvas.onmouseup = function(event) {
 		// jshint unused:false
 		theApp.scene.camera.mouseUp(event);
-
 	};
 	window.addEventListener('resize', function() {
 		theApp.resize();
