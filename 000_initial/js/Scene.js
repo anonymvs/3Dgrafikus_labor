@@ -7,18 +7,24 @@ const Scene = function(gl) {
   this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid);
   // this.garishProgram = new Program(gl, this.vsTrafo, this.fsGarish);
 
+  this.camera = new PerspectiveCamera();
   //this.triangleGeometry = new TriangleGeometry(gl);
   //this.quadGeometry = new QuadGeometry(gl);
   this.materials = [];
   this.material1 = new Material(gl, this.solidProgram);
   this.material1.colorTexture.set(new Texture2D(gl, 'media/YadonDh.png'));
+  this.material1.kd.set(new Vec3(1,1,1));
+  this.material1.ks.set(new Vec3(0,0,0));
   this.materials.push(this.material1);
 
   this.material2 = new Material(gl, this.solidProgram);
   this.material2.colorTexture.set(new Texture2D(gl, 'media/YadonEyeDh.png'));
+  this.material1.kd.set(new Vec3(1,1,1));
+  this.material1.ks.set(new Vec3(0,0,0));
   this.materials.push(this.material2);
   this.multiMesh = new MultiMesh(gl, 'media/Slowpoke.json', this.materials);
-  this.gameObject = new GameObject(gl, this.multiMesh);
+  this.gameObject = new GameObject(gl, this.multiMesh, this.camera);
+
 
   // this.material = new Material(gl, this.solidProgram);
   // this.material.colorTexture.set(new Texture2D(gl, 'media/asteroid.png'));
@@ -27,7 +33,7 @@ const Scene = function(gl) {
   // this.mesh = new Mesh(this.quadGeometry, this.material);
   // this.gameObject = new GameObject(gl, this.mesh);
 
-  this.camera = new PerspectiveCamera();
+
 
   // this.modelPosition = new Vec2();
   // this.modelMatrix = new Mat4();

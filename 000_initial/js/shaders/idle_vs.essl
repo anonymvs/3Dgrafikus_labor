@@ -2,12 +2,25 @@ Shader.source[document.currentScript.src.split('js/shaders/')[1]] = `
 	attribute vec3 vertexPosition;
 	attribute vec2 vertexTexCoord;
 	attribute vec3 vertexNormal;
+
 	varying vec2 tex;
+	varying vec3 normal;
+	varying float irradiance;
+	varying vec3 light;
+	varying vec3 view;
 
 	uniform mat4 modelMatrix;
+	uniform vec3 lightPos;
+	uniform vec3 camPos;
+
 
 	void main(void) {
 		gl_Position = vec4(vertexPosition, 1) * modelMatrix;
+		vec4 pos = vec4(vertexPosition, 1) * modelMatrix;
 		tex = vertexTexCoord;
+		normal = vertexNormal;
+		light = lightPos - pos.xyz;
+		view = camPos * pos.w - pos.xyz;
+		irradiance = dot(normalize(normal), normalize(lightPos));
 	}
 `;
