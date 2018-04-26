@@ -15,15 +15,27 @@ const Scene = function(gl) {
   this.material1.colorTexture.set(new Texture2D(gl, 'media/YadonDh.png'));
   this.material1.kd.set(new Vec3(1,1,1));
   this.material1.ks.set(new Vec3(0,0,0));
+  this.skyCubeTexture = new TextureCube(gl, [
+    "media/posx512.jpg",
+    "media/negx512.jpg",
+    "media/posy512.jpg",
+    "media/negy512.jpg",
+    "media/posz512.jpg",
+    "media/negz512.jpg"]);
+  this.material1.envMapTexture.set(this.skyCubeTexture);
   this.materials.push(this.material1);
 
   this.material2 = new Material(gl, this.solidProgram);
   this.material2.colorTexture.set(new Texture2D(gl, 'media/YadonEyeDh.png'));
-  this.material1.kd.set(new Vec3(1,1,1));
-  this.material1.ks.set(new Vec3(0,0,0));
+  this.material2.kd.set(new Vec3(1,1,1));
+  this.material2.ks.set(new Vec3(0,0,0));
+  this.material2.envMapTexture.set(this.skyCubeTexture);
   this.materials.push(this.material2);
+
   this.multiMesh = new MultiMesh(gl, 'media/Slowpoke.json', this.materials);
   this.gameObject = new GameObject(gl, this.multiMesh, this.camera);
+
+  this.gameObject.lightPos = new Vec3(0,0,100);
 
 
   // this.material = new Material(gl, this.solidProgram);
@@ -51,6 +63,7 @@ const Scene = function(gl) {
 
   this.hide = false;
   this.cnt = 0;
+  this.phi = 0;
 
 
 };
@@ -79,6 +92,12 @@ Scene.prototype.update = function(gl, keysPressed) {
   //console.log(this.gameObject.modelMatrix);
   this.gameObject.updateModelTransformation();
   this.gameObject.modelMatrix.mul(this.camera.viewProjMatrix);
+
+  this.phi+= 1;
+  this.phi = this.phi % 360;
+  this.gameObject.lightPos.x = this.gameObject.lightPos.x + 1 * Math.sin(this.phi*3.14/180);
+  this.gameObject.lightPos.y = this.gameObject.lightPos.y + 1 * Math.cos(this.phi*3.14/180);
+  console.log(this.gameObject.lightPos);
   //this.quadGeometry.draw();
   if(!this.hide) {
      this.gameObject.draw();

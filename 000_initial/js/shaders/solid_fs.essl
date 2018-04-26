@@ -8,10 +8,12 @@ Shader.source[document.currentScript.src.split('js/shaders/')[1]] = `
 	varying float irradiance;
 
 	uniform sampler2D colorTexture;
+	uniform samplerCube envMapTexture;
 	uniform vec3 kd, ks;
 
 	void main(void) {
-		gl_FragColor = texture2D(colorTexture, tex) * vec4(irradiance, irradiance, irradiance, 1);
+		gl_FragColor = textureCube( envMapTexture, reflect(-view, normal)) * texture2D(colorTexture, tex) * vec4(irradiance, irradiance, irradiance, 1);
+		textureCube( envMapTexture, reflect(-view, normal));
 		vec3 N = normalize(normal);
 		vec3 V = normalize(view);
 		vec3 L = normalize(light);
@@ -19,6 +21,6 @@ Shader.source[document.currentScript.src.split('js/shaders/')[1]] = `
 		float cost = dot(N, L);
 		float cosd = dot(N, H);
 		vec3 color = vec3(0.2,0.2,0.2) + (kd * cost + ks * pow(cosd, irradiance));
-		gl_FragColor = texture2D(colorTexture, tex) * vec4(color, 1);
+		gl_FragColor = textureCube( envMapTexture, reflect(-view, normal)) * texture2D(colorTexture, tex) * vec4(color, 1);
 	}
 `;

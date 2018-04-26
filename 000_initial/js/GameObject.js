@@ -9,7 +9,7 @@ const GameObject = function(gl, mesh, camera) {
 
   this.modelMatrix = new Mat4();
 
-  this.lightPos = new Vec3(0,0,100);
+  //this.lightPos = new Vec3(0,0,100);
 };
 
 GameObject.prototype.updateModelTransformation = function () {
